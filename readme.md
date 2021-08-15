@@ -1,7 +1,7 @@
 # Личный проект «Типотека» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александр Нефедьев](https://up.htmlacademy.ru/nodejs/3/user/1874327).
-* Наставник: `Неизвестно`.
+* Наставник: [Роман Шестернин](https://htmlacademy.ru/profile/id1831979).
 
 ---
 
