@@ -4,6 +4,7 @@
   "description": "Типотека",
   "main": "./src/service/service.js",
   "scripts": {
+    "start.dev": "nodemon ./src/service/service.js --server 3000",
     "start": "node ./src/service/service.js",
     "test": "npm run eslint",
     "eslint": "eslint --ext .js src/"
@@ -21,7 +22,8 @@
   "homepage": "https://github.com/knighter1/1874327-typoteka-3#readme",
   "devDependencies": {
     "eslint": "7.32.0",
-    "eslint-config-htmlacademy": "0.6.0"
+    "eslint-config-htmlacademy": "0.6.0",
+    "nodemon": "2.0.12"
   },
   "dependencies": {
     "chalk": "4.1.2"
