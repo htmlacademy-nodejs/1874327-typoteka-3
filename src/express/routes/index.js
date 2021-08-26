@@ -1,16 +1,24 @@
 const { Router } = require(`express`);
 const indexRouter = new Router();
 
-indexRouter.get(`/`, (req, res) => res.send(`/`));
+indexRouter.get(`/`, (req, res) => res.render(`main`, {}));
 
-indexRouter.get(`/register`, (req, res) => res.send(`/register`));
+indexRouter.get(`/main`, (req, res) => res.render(`main`, {}));
 
-indexRouter.get(`/login`, (req, res) => res.send(`/login`));
+indexRouter.get(`/sign-in`, (req, res) => res.render(`login`));
 
-indexRouter.get(`/my`, (req, res) => res.send(`/my`));
+indexRouter.get(`/registration`, (req, res) => res.render(`sign-up`));
 
-indexRouter.get(`/search`, (req, res) => res.send(`/search`));
+indexRouter.get(`/search`, (req, res) => res.render(`search`));
 
-indexRouter.get(`/categories`, (req, res) => res.send(`/categories`));
+indexRouter.get(`/post-user`, (req, res) => res.render(`post-detail`));
+
+indexRouter.get(`/publications-by-category`, (req, res) => res.render(`articles-by-category`));
+
+indexRouter.get(`/admin-comments`, (req, res) => res.render(`comments`));
+
+indexRouter.get(`/admin-publications`, (req, res) => res.render(`my`));
+
+indexRouter.get(`/admin-add-new-post-empty`, (req, res) => res.render(`post`));
 
 module.exports = indexRouter;
