@@ -1,8 +1,8 @@
 'use strict';
 
-const chalk = require('chalk');
+const chalk = require(`chalk`);
 const fs = require(`fs`).promises;
-const {getRandomInt, shuffle} = require(`../utils`);
+const { getRandomInt, shuffle } = require(`../utils`);
 
 const DEFAULT_COUNT = 1;
 const MAX_PUBLICATION_COUNT = 1000;
@@ -14,11 +14,11 @@ const FILE_SENTENCES_PATH = `./data/sentences.txt`;
 const FILE_TITLES_PATH = `./data/titles.txt`;
 const FILE_CATEGORIES_PATH = `./data/categories.txt`;
 
-const generateDate = () => 
+const generateDate = () =>
 {
     const now = new Date().getTime();
     return new Date(getRandomInt(now - PERIOD, now));
-}
+};
 
 const generatePublications = (count, sentences, categories, titles) => (
     Array(count).fill({}).map(() =>
@@ -29,21 +29,23 @@ const generatePublications = (count, sentences, categories, titles) => (
             announce: shuffle(sentences).slice(0, MAX_ANNOUNCE_SENTENCES_COUNT - 1).join(` `),
             fullText: shuffle(sentences).slice(0, getRandomInt(1, sentences.length - 1)).join(` `),
             сategory: categories[getRandomInt(0, categories.length - 1)]
-        }
+        };
     })
-)
+);
 
 const readContent = async (filePath) =>
 {
-    try {
+    try
+    {
         const content = await fs.readFile(filePath, `utf8`);
-        return content.trim().split('\n');
+        return content.trim().split(`\n`);
     }
-    catch (err) {
+    catch (err)
+    {
         console.error(chalk.red(err));
         return [];
     }
-}
+};
 
 module.exports =
 {
@@ -57,22 +59,25 @@ module.exports =
         const [count] = args;
         const countPublications = Number.parseInt(count, 10) || DEFAULT_COUNT;
 
-        if (countPublications > MAX_PUBLICATION_COUNT) {
+        if (countPublications > MAX_PUBLICATION_COUNT)
+        {
             console.error(chalk.red(`Не больше 1000 публикаций`));
             return 1;
         }
 
         const content = JSON.stringify(generatePublications(countPublications, sentences, categories, titles));
 
-        try {
+        try
+        {
             await fs.writeFile(FILE_NAME, content);
             console.info(chalk.green(`Операция выполнена успешно. Файл ${FILE_NAME} создан`));
         }
-        catch {
-            console.error(chalk.red(`Ошибка при записи в файл...`));
+        catch (err)
+        {
+            console.error(chalk.red(`Ошибка при записи в файл: ${err}`));
             return 1;
         }
-        
+
         return 0;
     }
 };
