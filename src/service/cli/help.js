@@ -1,11 +1,12 @@
 'use strict';
 
-const chalk = require('chalk');
+const chalk = require(`chalk`);
 
 module.exports =
 {
     name: `--help`,
-    run() {
+    run()
+    {
         console.info(chalk.gray(`Программа запускает http-сервер и формирует файл с данными для API.
             
             Гайд:
