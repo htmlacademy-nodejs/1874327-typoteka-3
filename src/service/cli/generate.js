@@ -42,7 +42,7 @@ const generatePublications = (count, sentences, categories, titles, comments) =>
             createdDate: generateDate(),
             announce: shuffle(sentences).slice(0, MAX_ANNOUNCE_SENTENCES_COUNT - 1).join(` `),
             fullText: shuffle(sentences).slice(0, getRandomInt(1, sentences.length - 1)).join(` `),
-            сategory: categories[getRandomInt(0, categories.length - 1)],
+            category: categories[getRandomInt(0, categories.length - 1)],
             comments: generateComments(getRandomInt(1, MAX_COMMENTS), comments)
         };
     })
