@@ -10,7 +10,6 @@ class CategoriesService
         const categories = this._publications.reduce((acc, publication) =>
         {
             acc.add(publication.category);
-            console.log(publication.category);
             return acc;
         }, new Set());
   
