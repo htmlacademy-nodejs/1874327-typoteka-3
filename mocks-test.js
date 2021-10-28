@@ -1,3 +1,5 @@
+'use strict';
+
 const mockData = [
     {
         "id":"Cx-wNZ",

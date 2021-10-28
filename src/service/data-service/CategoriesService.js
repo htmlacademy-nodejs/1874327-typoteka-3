@@ -1,3 +1,5 @@
+'use strict';
+
 class CategoriesService
 {
     constructor(publications)
