@@ -4,10 +4,9 @@ const articleValidator = require(`../middlewares/article-validator`);
 const articleExist = require(`../middlewares/article-exist`);
 const commentExist = require(`../middlewares/comment-exist`);
 
-const route = new Router();
-
 module.exports = (app, articleService, commentService) =>
 {
+    const route = new Router();
     app.use(`/articles`, route);
 
     route.get(`/`, async (_req, res) =>
@@ -36,7 +35,7 @@ module.exports = (app, articleService, commentService) =>
             .json(article);
     });
 
-    route.put(`/:articleId`, articleExist(articleService), (req, res) =>
+    route.put(`/:articleId`, articleExist(articleService), articleValidator, (req, res) =>
     {
         const article = articleService.update(res.locals.article, req.body);
         return res.status(HttpCode.OK)
@@ -45,9 +44,9 @@ module.exports = (app, articleService, commentService) =>
 
     route.delete(`/:articleId`, articleExist(articleService), (req, res) =>
     {
-        articleService.drop(req.params.articleId);
+        const id = articleService.drop(req.params.articleId);
         return res.status(HttpCode.OK)
-            .json(req.params);
+            .json({ id });
     });
 
     route.get(`/:articleId/comments`, articleExist(articleService), (_req, res) =>
@@ -58,9 +57,9 @@ module.exports = (app, articleService, commentService) =>
 
     route.delete(`/:articleId/comments/:commentId`, [articleExist(articleService), commentExist(commentService)], (req, res) =>
     {
-        commentService.drop(res.locals.article, req.params.commentId);
+        const id = commentService.drop(res.locals.article, req.params.commentId);
         return res.status(HttpCode.OK)
-            .json(req.params);
+            .json({ id });
     });
 
     route.post(`/:articleId/comments`, articleExist(articleService), (req, res) =>
