@@ -22,4 +22,10 @@ module.exports =
     ExitCode,
     MAX_ID_LENGTH: 6,
     HttpCode
-}; 
+};
+
+module.exports.Env =
+{
+    DEVELOPMENT: `development`,
+    PRODUCTION: `production`
+};
