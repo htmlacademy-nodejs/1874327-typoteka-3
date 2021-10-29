@@ -1,3 +1,5 @@
+'use strict';
+
 const CategoriesService = require(`./CategoriesService`);
 const ArticlesService = require(`./ArticlesService`);
 const CommentsService = require(`./CommentsService`);

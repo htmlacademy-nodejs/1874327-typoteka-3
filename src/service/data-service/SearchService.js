@@ -1,3 +1,5 @@
+'use strict';
+
 class SearchService
 {
     constructor(articles)

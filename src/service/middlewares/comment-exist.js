@@ -1,3 +1,5 @@
+'use strict';
+
 const { HttpCode } = require(`../../constants`);
 
 module.exports = (service) => (req, res, next) =>

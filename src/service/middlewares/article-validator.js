@@ -1,3 +1,5 @@
+'use strict';
+
 const {HttpCode} = require(`../../constants`);
 
 const articleKeys = [`title`, `createdDate`, `announce`, `fullText`, `category`];

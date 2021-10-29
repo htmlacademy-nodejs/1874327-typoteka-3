@@ -1,3 +1,5 @@
+'use strict';
+
 const categories = require(`./categories`);
 const articles = require(`./articles`);
 const search = require(`./search`);
