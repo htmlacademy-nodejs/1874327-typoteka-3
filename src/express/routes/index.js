@@ -2,8 +2,7 @@
 
 const { Router } = require(`express`);
 const indexRouter = new Router();
-
-indexRouter.get(`/`, (req, res) => res.render(`main`, {}));
+const api = require(`../api`).getAPI();
 
 indexRouter.get(`/main`, (req, res) => res.render(`main`, {}));
 
@@ -26,5 +25,13 @@ indexRouter.get(`/admin-add-new-post-empty`, (req, res) => res.render(`post`));
 indexRouter.get(`/admin-categories`, (req, res) => res.render(`all-categories`));
 
 indexRouter.get(`/register`, (req, res) => res.render(`registration`));
+
+// api
+
+indexRouter.get(`/`, async (_req, res) =>
+{
+    const articles = await api.getArticles();
+    res.render(`main`, { articles });
+});
 
 module.exports = indexRouter;
