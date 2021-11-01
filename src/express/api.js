@@ -32,6 +32,14 @@ class API
     async getArticle(id) {
         return this._load(`/articles/${id}`);
     }
+
+    async getCategories() {
+        return this._load(`/categories`);
+    }
+
+    async getCategoriesWithCounts() {
+        return this._load(`/categories/full`);
+    }
 }
 
 const defaultAPI = new API(defaultUrl, TIMEOUT);

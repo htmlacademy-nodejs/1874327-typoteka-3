@@ -30,8 +30,12 @@ indexRouter.get(`/register`, (req, res) => res.render(`registration`));
 
 indexRouter.get(`/`, async (_req, res) =>
 {
-    const articles = await api.getArticles();
-    res.render(`main`, { articles });
+    const [articles, categories] = await Promise.all([
+        api.getArticles(),
+        api.getCategoriesWithCounts()
+    ]);
+
+    res.render(`main`, { articles, categories });
 });
 
 module.exports = indexRouter;

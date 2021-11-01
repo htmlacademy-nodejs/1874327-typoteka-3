@@ -14,4 +14,11 @@ module.exports = (app, service) =>
         res.status(HttpCode.OK)
             .json(categories);
     });
+
+    route.get(`/full`, async (_req, res) =>
+    {
+        const categories = await service.findAllWithCounts();
+        res.status(HttpCode.OK)
+            .json(categories);
+    });
 };
