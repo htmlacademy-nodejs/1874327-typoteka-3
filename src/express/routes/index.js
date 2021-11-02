@@ -1,9 +1,9 @@
 'use strict';
-const moment = require(`moment`);
 
 const { Router } = require(`express`);
 const indexRouter = new Router();
 const api = require(`../api`).getAPI();
+const { getFormatedDate } = require(`../lib/utils`);
 
 indexRouter.get(`/main`, (req, res) => res.render(`main`, {}));
 
@@ -37,7 +37,7 @@ indexRouter.get(`/`, async (_req, res) =>
     ]);
 
     articles.forEach(article => {
-        article.createdDate = moment(article.createdDate).format(`DD.MM.YYYY, HH:mm`);
+        article.createdDate = getFormatedDate(article.createdDate);
     });
 
     res.render(`main`, { articles, categories });
