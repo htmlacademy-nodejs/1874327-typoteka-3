@@ -17,7 +17,7 @@ articlesRouter.get(`/edit/:id`, async (req, res) =>
     const { id } = req.params;
     const article = await api.getArticle(id);
 
-    res.render(`post-detail`, { article });
+    res.render(`post-form`, { article });
 });
 
 module.exports = articlesRouter;
