@@ -1,4 +1,5 @@
 'use strict';
+const logger = require(`../lib/logger`);
 
 const {HttpCode} = require(`../../constants`);
 
@@ -13,6 +14,7 @@ module.exports = (req, res, next) =>
 
     if (!keysExists)
     {
+        logger.error(`Bad request on article publish`);
         return res.status(HttpCode.BAD_REQUEST)
             .send(`Bad request`);
     }

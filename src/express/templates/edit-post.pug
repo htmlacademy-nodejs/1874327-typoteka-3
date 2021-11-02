@@ -7,20 +7,14 @@ block content
                 .new-publication
                     form(action='#' method='POST')
                         div(class='new-publication__header')
-                            if (article.new)
-                                h1 Новая публикация
-                            else
-                                h1 Редактирование
+                            h1 Редактирование
                             div(class='new-publication__date-form')
                                 h3 Дата публикации
                                 div(class='new-publication__date-form-division')
                                     div(class='new-publication__date-block')
                                         label(for='new-publication-date' aria-label='Календарь')
                                         input#new-publication-date(type='text' name='date' placeholder=`${article.createdDate}`)
-                            if (article.new)
-                                button(type='submit' class='new-publication__button button button--colored') Опубликовать
-                            else
-                                button(type='submit' class='new-publication__button button button--colored') Сохранить
+                            button(type='submit' class='new-publication__button button button--colored') Сохранить
                         a(class='popup__button button button--popup-close' aria-label='Закрыть окно')
                             | Закрыть
                             | окно
@@ -39,14 +33,13 @@ block content
                                     //button.button.button--transparent Удалить
                                 div(class='new-publication__category-wrapper')
                                     div(class='new-publication__checkbox new-publication__checkbox--auto')
-                                        if (article.category)
-                                            input#checkbox-auto(type='checkbox' name='category-1')
-                                            label(for='checkbox-auto') #{article.category}
+                                        input#checkbox-auto(type='checkbox' name='category-1')
+                                        label(for='checkbox-auto') #{article.category}
                                     a(class='new-publication__form-link button button--transparent' href='#') Добавить категорию
                             div(class='form__wrapper form__wrapper--text')
                                 div(class='form__field form__field--publication-text')
                                     label
-                                        textarea(rows='5' name='announcement' placeholder='Анонс публикации') #{article.announce}
+                                        textarea(rows='5' name='announcement' placeholder='Анонс публикации' required='') #{article.announce}
                                 div(class='form__field form__field--publication-text')
                                     label
                                         textarea(rows='10' name='full-text' placeholder='Полный текст публикации') #{article.fullText}

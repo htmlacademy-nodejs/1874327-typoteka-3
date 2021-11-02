@@ -40,6 +40,16 @@ class API
     async getCategoriesWithCounts() {
         return this._load(`/categories/full`);
     }
+
+    async createArticle(data)
+    {
+        return this._load(`/articles`,
+            {
+                method: `POST`,
+                data
+            }
+        );
+    }
 }
 
 const defaultAPI = new API(defaultUrl, TIMEOUT);
