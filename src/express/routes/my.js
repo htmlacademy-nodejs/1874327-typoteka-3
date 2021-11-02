@@ -19,7 +19,14 @@ myRouter.get(`/`, async (_req, res) =>
 myRouter.get(`/comments`, async (_req, res) =>
 {
     const articles = await api.getArticles();
-    res.render(`comments`, { articles });
+
+    const comments = articles.reduce((acc, article) =>
+    {
+        acc.push(...article.comments);
+        return acc;
+    }, []);
+
+    res.render(`comments`, { comments });
 });
 
 module.exports = myRouter;
