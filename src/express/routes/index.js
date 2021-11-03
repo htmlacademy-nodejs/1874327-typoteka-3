@@ -11,8 +11,6 @@ indexRouter.get(`/sign-in`, (req, res) => res.render(`login`));
 
 indexRouter.get(`/registration`, (req, res) => res.render(`sign-up`));
 
-indexRouter.get(`/search`, (req, res) => res.render(`search`));
-
 indexRouter.get(`/post-user`, (req, res) => res.render(`post-detail`));
 
 indexRouter.get(`/publications-by-category`, (req, res) => res.render(`articles-by-category`));
@@ -41,6 +39,37 @@ indexRouter.get(`/`, async (_req, res) =>
     });
 
     res.render(`main`, { articles, categories });
+});
+
+indexRouter.get(`/search`, async (req, res) =>
+{    
+    const { query } = req.query;
+
+    if (!query)
+    {
+        res.render(`search`, {});
+        return;
+    }
+
+    try
+    {
+        const results = await api.search(query);
+
+        results.forEach(article => {
+            article.createdDate = getFormatedDate(article.createdDate);
+        });
+
+        res.render(`search-result`, {
+            results,
+            query
+        });
+    } catch (error)
+    {
+        res.render(`search-no-result`, {
+            results: [],
+            query
+        });
+    }
 });
 
 module.exports = indexRouter;
