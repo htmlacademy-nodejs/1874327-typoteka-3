@@ -27,8 +27,6 @@ module.exports = (app, articleService, commentService) => {
     });
 
     route.post(`/`, articleValidator, (req, res) => {
-        console.log(req.body);
-
         const article = articleService.create(req.body);
         return res.status(HttpCode.CREATED)
             .json(article);
