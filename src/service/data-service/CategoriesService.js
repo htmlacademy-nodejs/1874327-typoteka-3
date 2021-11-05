@@ -16,10 +16,12 @@ class CategoriesService {
 
     findAllWithCounts() {
         const categories = this._publications.reduce((acc, publication) => {
-            if (acc.has(publication.category))
+            if (acc.has(publication.category)) {
                 acc.get(publication.category).count++;
-            else
+            }
+            else {
                 acc.set(publication.category, { count: 1 });
+            }
 
             return acc;
         }, new Map());

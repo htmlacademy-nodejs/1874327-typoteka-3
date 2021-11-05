@@ -9,9 +9,10 @@ const myRouter = new Router();
 myRouter.get(`/`, async (_req, res) => {
     const articles = await api.getArticles();
 
-    articles.forEach(article => {
+    articles.map(article => {
         article.createdDate = getFormatedDate(article.createdDate);
-    });
+        return article;
+    })
 
     res.render(`my`, { articles });
 });

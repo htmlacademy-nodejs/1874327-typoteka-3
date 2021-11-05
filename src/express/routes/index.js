@@ -34,9 +34,10 @@ indexRouter.get(`/`, async (_req, res) => {
         api.getCategoriesWithCounts()
     ]);
 
-    articles.forEach(article => {
+    articles.map(article => {
         article.createdDate = getFormatedDate(article.createdDate);
-    });
+        return article;
+    })
 
     res.render(`main`, { articles, categories });
 });

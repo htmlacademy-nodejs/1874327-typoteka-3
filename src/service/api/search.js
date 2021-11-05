@@ -8,15 +8,17 @@ module.exports = (app, articleService) => {
     app.use(`/search`, route);
 
     route.get(`/`, async (req, res) => {
-        if (!req.query.query)
+        if (!req.query.query) {
             return res.status(HttpCode.BAD_REQUEST)
                 .send(`Query not found`);
+        }
 
         const articles = await articleService.findByTitle(req.query.query);
 
-        if (!articles.length)
+        if (!articles.length) {
             return res.status(HttpCode.NOT_FOUND)
                 .send(`Title '${ req.query.query }' not found`);
+        }
 
         return res.status(HttpCode.OK)
             .json(articles);

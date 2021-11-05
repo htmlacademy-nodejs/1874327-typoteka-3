@@ -34,8 +34,9 @@ class CommentsService {
 
     findOne(articleId, commentId) {
         return this._articles.find((item) => {
-            if (item.id !== articleId)
+            if (item.id !== articleId) {
                 return;
+            }
 
             return item.comments.find((comment) => comment.id === commentId);
         });
