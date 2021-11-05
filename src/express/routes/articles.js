@@ -1,9 +1,10 @@
 'use strict';
 
 const { Router } = require(`express`);
-const articlesRouter = new Router();
 const api = require(`../api`).getAPI();
 const upload = require(`../middlewares/upload`);
+
+const articlesRouter = new Router();
 
 articlesRouter.get(`/category/:id`, (_req, res) => res.send(`/articles/category/:id`));
 

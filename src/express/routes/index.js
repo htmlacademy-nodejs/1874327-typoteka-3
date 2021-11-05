@@ -1,9 +1,10 @@
 'use strict';
 
 const { Router } = require(`express`);
-const indexRouter = new Router();
 const api = require(`../api`).getAPI();
 const { getFormatedDate } = require(`../lib/utils`);
+
+const indexRouter = new Router();
 
 indexRouter.get(`/main`, (_req, res) => res.render(`main`, {}));
 
