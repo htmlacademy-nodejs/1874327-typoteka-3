@@ -12,7 +12,6 @@ const DEFAULT_PORT = 8080;
 
 const app = express();
 
-// app.engine('pug', require('pug').__express);
 app.set(`views`, `./src/express/templates`);
 app.set(`view engine`, `pug`);
 

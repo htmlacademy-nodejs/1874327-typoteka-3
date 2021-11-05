@@ -5,8 +5,7 @@ const myRouter = new Router();
 const api = require(`../api`).getAPI();
 const { getFormatedDate } = require(`../lib/utils`);
 
-myRouter.get(`/`, async (_req, res) =>
-{
+myRouter.get(`/`, async (_req, res) => {
     const articles = await api.getArticles();
 
     articles.forEach(article => {
@@ -16,12 +15,10 @@ myRouter.get(`/`, async (_req, res) =>
     res.render(`my`, { articles });
 });
 
-myRouter.get(`/comments`, async (_req, res) =>
-{
+myRouter.get(`/comments`, async (_req, res) => {
     const articles = await api.getArticles();
 
-    const comments = articles.reduce((acc, article) =>
-    {
+    const comments = articles.reduce((acc, article) => {
         acc.push(...article.comments);
         return acc;
     }, []);

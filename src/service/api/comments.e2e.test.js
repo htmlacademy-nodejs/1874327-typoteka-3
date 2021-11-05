@@ -7,8 +7,7 @@ const CommentsService = require(`../data-service/CommentsService`);
 const { HttpCode } = require(`../../constants`);
 const mockData = require(`../../../mocks-test`);
 
-const createAPI = () =>
-{
+const createAPI = () => {
     const app = express();
     const cloneData = JSON.parse(JSON.stringify(mockData));
     app.use(express.json());
@@ -17,14 +16,12 @@ const createAPI = () =>
     return app;
 };
 
-describe(`API returns a list of all commets`, () =>
-{
+describe(`API returns a list of all commets`, () => {
     const app = createAPI();
   
     let response;
   
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .get(`/comments`);
     });

@@ -1,16 +1,12 @@
 'use strict';
 
-class CategoriesService
-{
-    constructor(publications)
-    {
+class CategoriesService {
+    constructor(publications) {
           this._publications = publications;
     }
   
-    findAll()
-    {
-        const categories = this._publications.reduce((acc, publication) =>
-        {
+    findAll() {
+        const categories = this._publications.reduce((acc, publication) => {
             acc.add(publication.category);
             return acc;
         }, new Set());
@@ -18,10 +14,8 @@ class CategoriesService
         return [...categories];
     }
 
-    findAllWithCounts()
-    {
-        const categories = this._publications.reduce((acc, publication) =>
-        {
+    findAllWithCounts() {
+        const categories = this._publications.reduce((acc, publication) => {
             if (acc.has(publication.category))
                 acc.get(publication.category).count++;
             else

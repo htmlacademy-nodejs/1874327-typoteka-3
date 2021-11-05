@@ -12,16 +12,13 @@ const app = express();
 app.use(express.json());
 search(app, new DataService(mockData));
 
-describe(`API returns articles based on search query`, () =>
-{
+describe(`API returns articles based on search query`, () => {
     let response;
   
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .get(`/search`)
-            .query(
-                {
+            .query({
                     query: `Как достигнуть успеха`
                 });
     });

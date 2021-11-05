@@ -13,11 +13,9 @@ const logger = pino({
     prettyPrint: isDevMode
 }, isDevMode ? process.stdout : pino.destination(LOG_FILE));
 
-module.exports =
-{
+module.exports = {
     logger,
-    getLogger(options = {})
-    {
+    getLogger(options = {}) {
         return logger.child(options);
     }
 };

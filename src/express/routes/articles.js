@@ -5,16 +5,15 @@ const articlesRouter = new Router();
 const api = require(`../api`).getAPI();
 const upload = require(`../middlewares/upload`);
 
-articlesRouter.get(`/category/:id`, (req, res) => res.send(`/articles/category/:id`));
+articlesRouter.get(`/category/:id`, (_req, res) => res.send(`/articles/category/:id`));
 
 articlesRouter.get(`/add`, (_req, res) => {
     res.render(`add-new-post`, { });
 });
 
-articlesRouter.get(`/:id`, (req, res) => res.send(`/articles/:id`));
+articlesRouter.get(`/:id`, (_req, res) => res.send(`/articles/:id`));
 
-articlesRouter.get(`/edit/:id`, async (req, res) =>
-{
+articlesRouter.get(`/edit/:id`, async (req, res) => {
     const { id } = req.params;
     const article = await api.getArticle(id);
 
@@ -23,11 +22,9 @@ articlesRouter.get(`/edit/:id`, async (req, res) =>
 
 articlesRouter.post(`/add`, 
     upload.single(`photo`),
-    async (req, res) =>
-    {
+    async (req, res) => {
         const { body, file } = req;
-        const articleData =
-        {
+        const articleData = {
             photo: file ? file.filename : ``,
             category: body.category ? body.category : `Разное`,
             title: body.title,
@@ -36,8 +33,7 @@ articlesRouter.post(`/add`,
             createdDate: new Date()
         };
 
-        try
-        {
+        try {
             await api.createArticle(articleData);
             res.redirect(`/my`);
         } catch (error) {

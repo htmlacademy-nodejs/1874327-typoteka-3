@@ -3,13 +3,11 @@
 const { Router } = require(`express`);
 const { HttpCode } = require(`../../constants`);
 
-module.exports = (app, articleService) =>
-{
+module.exports = (app, articleService) => {
     const route = new Router();
     app.use(`/search`, route);
 
-    route.get(`/`, async (req, res) =>
-    {
+    route.get(`/`, async (req, res) => {
         if (!req.query.query)
             return res.status(HttpCode.BAD_REQUEST)
                 .send(`Query not found`);

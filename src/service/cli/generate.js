@@ -18,24 +18,22 @@ const FILE_TITLES_PATH = `./data/titles.txt`;
 const FILE_CATEGORIES_PATH = `./data/categories.txt`;
 const FILE_COMMENTS_PATH = `./data/comments.txt`;
 
-const generateDate = () =>
-{
+const generateDate = () => {
     const now = new Date().getTime();
     return new Date(getRandomInt(now - PERIOD, now));
 };
 
 const generateComments = (count, comments) => (
-    Array(count).fill({}).map(() => (
-    {
+    Array(count).fill({}).map(() => ({
         id: nanoid(MAX_ID_LENGTH),
         text: shuffle(comments)
             .slice(0, getRandomInt(1, 3))
             .join(` `),
     }))
 );
+
 const generatePublications = (count, sentences, categories, titles, comments) => (
-    Array(count).fill({}).map(() =>
-    {
+    Array(count).fill({}).map(() =>{
         return {
             id: nanoid(MAX_ID_LENGTH),
             title: titles[getRandomInt(0, titles.length - 1)],
@@ -48,25 +46,20 @@ const generatePublications = (count, sentences, categories, titles, comments) =>
     })
 );
 
-const readContent = async (filePath) =>
-{
-    try
-    {
+const readContent = async (filePath) => {
+    try {
         const content = await fs.readFile(filePath, `utf8`);
         return content.trim().split(`\n`);
     }
-    catch (err)
-    {
+    catch (err) {
         console.error(chalk.red(err));
         return [];
     }
 };
 
-module.exports =
-{
+module.exports = {
     name: `--generate`,
-    async run(args)
-    {
+    async run(args) {
         const sentences = await readContent(FILE_SENTENCES_PATH);
         const titles = await readContent(FILE_TITLES_PATH);
         const categories = await readContent(FILE_CATEGORIES_PATH);
@@ -75,21 +68,18 @@ module.exports =
         const [count] = args;
         const countPublications = Number.parseInt(count, 10) || DEFAULT_COUNT;
 
-        if (countPublications > MAX_PUBLICATION_COUNT)
-        {
+        if (countPublications > MAX_PUBLICATION_COUNT) {
             console.error(chalk.red(`Не больше 1000 публикаций`));
             return 1;
         }
 
         const content = JSON.stringify(generatePublications(countPublications, sentences, categories, titles, comments));
 
-        try
-        {
+        try {
             await fs.writeFile(FILE_NAME, content);
             console.info(chalk.green(`Операция выполнена успешно. Файл ${FILE_NAME} создан`));
         }
-        catch (err)
-        {
+        catch (err) {
             console.error(chalk.red(`Ошибка при записи в файл: ${err}`));
             return 1;
         }

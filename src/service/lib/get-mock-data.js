@@ -7,18 +7,15 @@ let data = [];
 const { getLogger } = require(`../lib/logger`);
 const logger = getLogger({ name: `api` });
 
-const getMockData = async () =>
-{
+const getMockData = async () => {
     if (data.length > 0) {
         return data;
     }
 
-    try
-    {
+    try {
         const fileContent = await fs.readFile(FILENAME);
         data = JSON.parse(fileContent);
-    } catch (err)
-    {
+    } catch (err) {
         logger.error(err);
         return (err);
     }

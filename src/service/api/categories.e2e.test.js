@@ -12,13 +12,11 @@ const app = express();
 app.use(express.json());
 category(app, new DataService(mockData));
 
-describe(`API returns category list`, () =>
-{
+describe(`API returns category list`, () => {
     jest.setTimeout(10000)
     let response;
   
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .get(`/categories`);
     });
