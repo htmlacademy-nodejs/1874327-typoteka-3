@@ -3,10 +3,11 @@ extends common/layout-menu.pug
 block content
     main
         section.search-page
-            div(class='search-page__wrapper')
+            div(class='search-page__wrapper search-page__wrapper--empty')
                 h1 Поиск
                 div(class='search search-page__form')
                     form(action='#' method='get')
                         label
-                            input(type='text' name='query' placeholder='Что ищем?')
+                            input(type='text' placeholder='Что ищем?' value=`${query}` name='query')
                         button(class='search__button button button--transparent' type='submit') Найти
+                p(class='search-page__empty') Ничего не нашлось

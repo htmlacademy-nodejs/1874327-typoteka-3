@@ -1,14 +1,12 @@
 'use strict';
 
-class SearchService
-{
-    constructor(articles)
-    {
+class SearchService {
+
+    constructor(articles) {
         this._articles = articles;
     }
   
-    findByTitle(searchSubStr)
-    {
+    findByTitle(searchSubStr) {
         return this._articles.filter(article => article.title.toLowerCase().includes(searchSubStr.toLowerCase()));
     }
 }

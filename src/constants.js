@@ -4,8 +4,7 @@ const DEFAULT_COMMAND = `--help`;
 const USER_ARGV_INDEX = 2;
 const ExitCode = 0;
 
-const HttpCode =
-{
+const HttpCode = {
     OK: 200,
     CREATED: 201,
     BAD_REQUEST: 400,
@@ -15,8 +14,7 @@ const HttpCode =
     UNAUTHORIZED: 401,
 };
 
-module.exports =
-{
+module.exports = {
     DEFAULT_COMMAND,
     USER_ARGV_INDEX,
     ExitCode,
@@ -24,8 +22,7 @@ module.exports =
     HttpCode
 };
 
-module.exports.Env =
-{
+module.exports.Env = {
     DEVELOPMENT: `development`,
     PRODUCTION: `production`
 };

@@ -5,14 +5,13 @@ const indexRouter = require(`./routes/index`);
 const myRouter = require(`./routes/my.js`);
 const articlesRouter = require(`./routes/articles`);
 
-const { getLogger } = require(`../lib/logger`);
+const { getLogger } = require(`../service/lib/logger`);
 const logger = getLogger({ name: `api` });
 
 const DEFAULT_PORT = 8080;
 
 const app = express();
 
-// app.engine('pug', require('pug').__express);
 app.set(`views`, `./src/express/templates`);
 app.set(`view engine`, `pug`);
 

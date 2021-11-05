@@ -2,11 +2,9 @@
 
 const chalk = require(`chalk`);
 
-module.exports =
-{
+module.exports = {
     name: `--help`,
-    run()
-    {
+    run() {
         console.info(chalk.gray(`Программа запускает http-сервер и формирует файл с данными для API.
             
             Гайд:

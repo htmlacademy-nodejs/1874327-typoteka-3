@@ -12,6 +12,7 @@ Thumbs.db
 node_modules/
 mocks.json
 logs/
+src/exporess/upload/
 
 # Директория с собранными файлами проекта
 build/

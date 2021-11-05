@@ -8,23 +8,21 @@ const CommentService = require(`../data-service/CommentsService`);
 const { HttpCode } = require(`../../constants`);
 const mockData = require(`../../../mocks-test`);
 
-const createAPI = () =>
-{
+const createAPI = () => {
     const app = express();
     const cloneData = JSON.parse(JSON.stringify(mockData));
     app.use(express.json());
     articles(app, new DataService(cloneData), new CommentService(cloneData));
+    
     return app;
 };
 
-describe(`API returns a list of all articles`, () =>
-{
+describe(`API returns a list of all articles`, () => {
     const app = createAPI();
   
     let response;
   
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .get(`/articles`);
     });
@@ -36,14 +34,12 @@ describe(`API returns a list of all articles`, () =>
     test(`First article's id equals "Cx-wNZ"`, () => expect(response.body[0].id).toBe(`Cx-wNZ`));
 });
 
-describe(`API returns an article with given id`, () =>
-{
+describe(`API returns an article with given id`, () => {
     const app = createAPI();
   
     let response;
   
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .get(`/articles/0C8erK`);
     });
@@ -53,10 +49,8 @@ describe(`API returns an article with given id`, () =>
     test(`Article's title is "Как перестать беспокоиться и начать жить"`, () => expect(response.body.title).toBe(`Как перестать беспокоиться и начать жить`));
 });
 
-describe(`API creates an article if data is valid`, () =>
-{
-    const newArticle =
-    {
+describe(`API creates an article if data is valid`, () => {
+    const newArticle = {
         title: `Тест добавления статьи`,
         announce: `Программировать не настолько сложно, как об этом говорят`,
         fullText: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
@@ -68,8 +62,7 @@ describe(`API creates an article if data is valid`, () =>
   
     let response;
   
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .post(`/articles`)
             .send(newArticle);
@@ -85,10 +78,8 @@ describe(`API creates an article if data is valid`, () =>
     );
 });
 
-describe(`API refuses to create an article if data is invalid`, () =>
-{
-    const newArticle =
-    {
+describe(`API refuses to create an article if data is invalid`, () => {
+    const newArticle = {
         title: `Тест добавления статьи`,
         fullText: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
         createdDate: `2021-08-27T00:15:14.409Z`,
@@ -97,10 +88,8 @@ describe(`API refuses to create an article if data is invalid`, () =>
   
     const app = createAPI();
   
-    test(`Without any required property response code is 400`, async () =>
-    {
-        for (const key of Object.keys(newArticle))
-        {
+    test(`Without any required property response code is 400`, async () => {
+        for (const key of Object.keys(newArticle)) {
             const badArticle = { ...newArticle };
             delete badArticle[key];
             await request(app)
@@ -111,10 +100,8 @@ describe(`API refuses to create an article if data is invalid`, () =>
     });
 });
 
-describe(`API changes existent article`, () =>
-{
-    const newArticle =
-    {
+describe(`API changes existent article`, () => {
+    const newArticle = {
         title: `Тест добавления статьи измененный`,
         announce: `Программировать не настолько сложно, как об этом говорят`,
         fullText: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
@@ -126,8 +113,7 @@ describe(`API changes existent article`, () =>
   
     let response;
   
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .put(`/articles/RxCDXS`)
             .send(newArticle);
@@ -143,12 +129,10 @@ describe(`API changes existent article`, () =>
     );
 });
 
-test(`API returns status code 404 when trying to change non-existent article`, () =>
-{
+test(`API returns status code 404 when trying to change non-existent article`, () => {
     const app = createAPI();
   
-    const validArticle =
-    {
+    const validArticle = {
         title: `Тест добавления статьи измененный`,
         announce: `Программировать не настолько сложно, как об этом говорят`,
         fullText: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
@@ -166,8 +150,7 @@ test(`API returns status code 400 when trying to change an article with invalid 
 {
     const app = createAPI();
   
-    const invalidArticle =
-    {
+    const invalidArticle = {
         title: `Тест добавления статьи измененный`,
         announce: `Программировать не настолько сложно, как об этом говорят`,
         fullText: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
@@ -186,8 +169,7 @@ describe(`API correctly deletes an article`, () =>
   
     let response;
   
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .delete(`/articles/73y6Oc`);
     });
@@ -198,15 +180,13 @@ describe(`API correctly deletes an article`, () =>
   
     test(`Articles count is 4 now`, () => request(app)
         .get(`/articles`)
-        .expect((res) => 
-        {
+        .expect((res) => {
             expect(res.body.length).toBe(4)
         })
     );
 });
 
-test(`API refuses to delete non-existent article`, () =>
-{
+test(`API refuses to delete non-existent article`, () => {
     const app = createAPI();
   
     return request(app)
@@ -216,14 +196,12 @@ test(`API refuses to delete non-existent article`, () =>
 
 // comments tests
 
-describe(`API returns a list of commets with given article id`, () =>
-{
+describe(`API returns a list of commets with given article id`, () => {
     const app = createAPI();
   
     let response;
   
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .get(`/articles/RxCDXS/comments`);
     });
@@ -235,8 +213,7 @@ describe(`API returns a list of commets with given article id`, () =>
     test(`First comment's id equals "ue8TuH"`, () => expect(response.body[0].id).toBe(`ue8TuH`));
 });
 
-test(`API refuses to get comments of non-existent offer`, () =>
-{
+test(`API refuses to get comments of non-existent offer`, () => {
     const app = createAPI();
   
     return request(app)
@@ -244,10 +221,8 @@ test(`API refuses to get comments of non-existent offer`, () =>
         .expect(HttpCode.NOT_FOUND);
 });
 
-describe(`API creates a comment if data is valid`, () =>
-{
-    const newComment =
-    {
+describe(`API creates a comment if data is valid`, () => {
+    const newComment = {
         text: `Новый комментарий`
     };
   
@@ -255,8 +230,7 @@ describe(`API creates a comment if data is valid`, () =>
   
     let response;
   
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .post(`/articles/RxCDXS/comments`)
             .send(newComment);
@@ -272,19 +246,15 @@ describe(`API creates a comment if data is valid`, () =>
     );
 });
 
-describe(`API refuses to create a comment if data is invalid`, () =>
-{
-    const newComment =
-    {
+describe(`API refuses to create a comment if data is invalid`, () => {
+    const newComment = {
         text: `Новый комментарий`
     };
   
     const app = createAPI();
   
-    test(`Without any required property response code is 400`, async () =>
-    {
-        for (const key of Object.keys(newComment))
-        {
+    test(`Without any required property response code is 400`, async () => {
+        for (const key of Object.keys(newComment)) {
             const badComment = { ...newComment };
             delete badComment[key];
             await request(app)
@@ -295,14 +265,12 @@ describe(`API refuses to create a comment if data is invalid`, () =>
     });
 });
 
-describe(`API correctly deletes a comment`, () =>
-{
+describe(`API correctly deletes a comment`, () => {
     const app = createAPI();
 
     let response;
 
-    beforeAll(async () =>
-    {
+    beforeAll(async () => {
         response = await request(app)
             .delete(`/articles/RxCDXS/comments/Koiy1L`);
     });
@@ -313,15 +281,13 @@ describe(`API correctly deletes a comment`, () =>
   
     test(`Offer count is 3 now`, () => request(app)
         .get(`/articles/RxCDXS/comments`)
-        .expect((res) => 
-        {
+        .expect((res) => {
             expect(res.body.length).toBe(3)
         })
     );
 });
 
-test(`API refuses to delete non-existent comment`, () =>
-{
+test(`API refuses to delete non-existent comment`, () => {
     const app = createAPI();
   
     return request(app)

@@ -3,15 +3,13 @@
 const { nanoid } = require(`nanoid`);
 const MAX_ID_LENGTH = require(`../../constants.js`).MAX_ID_LENGTH;
 
-class CommentsService
-{
-    constructor(articles)
-    {
+class CommentsService {
+
+    constructor(articles) {
         this._articles = articles;
     }
     
-    create(article, comment)
-    {
+    create(article, comment) {
         const newComment = Object
             .assign({id: nanoid(MAX_ID_LENGTH)}, comment);
     
@@ -20,14 +18,12 @@ class CommentsService
         return newComment;
     }
     
-    drop(article, commentId)
-    {
+    drop(article, commentId) {
         article.comments = article.comments.filter((comment) => comment.id !== commentId);
         return commentId;
     }
     
-    findAll()
-    {
+    findAll() {
         const reducer = (prev, current) => {
             prev.push(...current.comments);
             return prev;
@@ -36,17 +32,15 @@ class CommentsService
         return this._articles.reduce(reducer, []);
     }
 
-    findOne(articleId, commentId)
-    {
-        return this._articles.find((item) => 
-        {
-            if (item.id !== articleId)
+    findOne(articleId, commentId) {
+        return this._articles.find((item) => {
+            if (item.id !== articleId) {
                 return;
+            }
 
             return item.comments.find((comment) => comment.id === commentId);
         });
     }
-
 }
 
 module.exports = CommentsService;

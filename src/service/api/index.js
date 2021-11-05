@@ -17,8 +17,7 @@ const { Router } = require(`express`);
 
 const app = new Router();
   
-(async () =>
-{
+(async () => {
     const mockData = await getMockData();
     const commentsService = new CommentsService(mockData)
 
