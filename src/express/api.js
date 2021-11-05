@@ -8,6 +8,7 @@ const port = process.env.API_PORT || 3000;
 const defaultUrl = `http://localhost:${port}/api/`;
 
 class API {
+    
     constructor(baseURL, timeout) {
         this._http = axios.create({
                 baseURL,
@@ -21,23 +22,23 @@ class API {
         return response.data;
     }
 
-    async getArticles() {
+    getArticles() {
         return this._load(`/articles`);
     }
 
-    async getArticle(id) {
+    getArticle(id) {
         return this._load(`/articles/${id}`);
     }
 
-    async getCategories() {
+    getCategories() {
         return this._load(`/categories`);
     }
 
-    async getCategoriesWithCounts() {
+    getCategoriesWithCounts() {
         return this._load(`/categories/full`);
     }
 
-    async createArticle(data) {
+    createArticle(data) {
         return this._load(`/articles`, {
                 method: `POST`,
                 data
@@ -45,7 +46,7 @@ class API {
         );
     }
 
-    async search(query) {
+    search(query) {
         return this._load(`/search`, {params: { query }});
     }
 }
