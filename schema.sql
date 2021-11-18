@@ -34,7 +34,7 @@ CREATE TABLE publications_categories(
 );
 
 CREATE TABLE comments(
-    id integer PRIMARY KEY,
+    id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     publication_id integer NOT NULL,
     user_id integer NOT NULL,
     text text NOT NULL,
