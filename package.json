@@ -5,8 +5,8 @@
     "main": "./src/service/service.js",
     "scripts": {
         "start-front-server": "nodemon ./src/express/express.js",
-        "start::debug": "cross-env NODE_ENV=development LOG_LEVEL=debug nodemon ./src/service/service.js --server 3000",
-        "start": "cross-env NODE_ENV=production nodemon ./src/service/service.js --server 3000",
+        "start::debug": "cross-env LOG_LEVEL=debug NODE_ENV=development nodemon -r dotenv/config ./src/service/service.js --server 3000",
+        "start": "cross-env NODE_ENV=production LOG_LEVEL=error nodemon -r dotenv/config ./src/service/service.js --server 3000",
         "test": "npm run eslint && npm run jest",
         "jest": "jest",
         "eslint": "eslint --ext .js src/"
@@ -34,12 +34,15 @@
         "axios": "0.24.0",
         "chalk": "4.1.2",
         "cross-env": "7.0.3",
+        "dotenv": "16.0.0",
         "express": "4.17.1",
         "moment": "2.29.1",
         "multer": "1.4.3",
         "nanoid": "3.1.30",
         "path": "0.12.7",
+        "pg": "8.7.3",
         "pino": "7.1.0",
-        "pug": "3.0.2"
+        "pug": "3.0.2",
+        "sequelize": "6.16.1"
     }
 }
