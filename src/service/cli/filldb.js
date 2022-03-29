@@ -4,11 +4,9 @@ const chalk = require(`chalk`);
 const fs = require(`fs`).promises;
 const { getRandomInt, shuffle } = require(`../utils`);
 
-const Aliase = require(`../models/aliase`);
-const defineModels = require(`../models`);
-
 const sequelize = require(`../lib/sequelize`);
 const connectDb = require(`../lib/db-connect`);
+const initDb = require(`../lib/init-db`);
 
 const DEFAULT_COUNT = 20;
 const MAX_PUBLICATION_COUNT = 1000;
@@ -54,8 +52,8 @@ const generatePublications = (count, sentences, categories, titles, comments) =>
         return {
             title: titles[getRandomInt(0, titles.length - 1)],
             createdDate: generateDate(),
-            announce: shuffle(sentences).slice(0, MAX_ANNOUNCE_SENTENCES_COUNT - 1).join(` `),
-            text: shuffle(sentences).slice(0, getRandomInt(1, sentences.length - 1)).join(` `),
+            announce: shuffle(sentences).slice(0, MAX_ANNOUNCE_SENTENCES_COUNT - 1).join(` `).substr(0, 249),
+            text: shuffle(sentences).slice(0, getRandomInt(1, sentences.length - 1)).join(` `).substr(0, 999),
             categories: getRandomSubarray(categories),
             comments: generateComments(getRandomInt(1, MAX_COMMENTS), comments),
             user_id: getRandomInt(1, 2)
@@ -78,7 +76,6 @@ module.exports = {
     name: `--filldb`,
     async run(args) {
         await connectDb();
-        await sequelize.sync({force: true});
 
         const sentences = await readContent(FILE_SENTENCES_PATH);
         const titles = await readContent(FILE_TITLES_PATH);
@@ -89,26 +86,6 @@ module.exports = {
         const countPublications = Math.min(Number.parseInt(count, 10) || DEFAULT_COUNT, MAX_PUBLICATION_COUNT);
         const publications = generatePublications(countPublications, sentences, categories, titles, comments);
         
-        const {Category, Publication} = defineModels(sequelize);
-        await sequelize.sync({force: true});
-
-        const categoryModels = await Category.bulkCreate(
-            categories.map((item) => ({name: item}))
-        );
-
-        const categoryIdByName = categoryModels.reduce((acc, next) => ({
-            [next.name]: next.id,
-            ...acc
-        }), {});
-
-        const publicationPromises = publications.map(async (publication) => {
-            const publicationModel = await Publication.create(publication, {include: [Aliase.COMMENTS]});
-            await publicationModel.addCategories(
-                publication.categories.map(
-                    (name) => categoryIdByName[name]
-                )
-            );
-        });
-        await Promise.all(publicationPromises);
+        await initDb(sequelize, { categories, publications });
     }
 };

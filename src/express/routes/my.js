@@ -7,7 +7,7 @@ const { getFormatedDate } = require(`../lib/utils`);
 const myRouter = new Router();
 
 myRouter.get(`/`, async (_req, res) => {
-    const articles = await api.getArticles();
+    const articles = await api.getArticles({comments: false});
 
     articles.map(article => {
         article.createdDate = getFormatedDate(article.createdDate);
@@ -18,7 +18,7 @@ myRouter.get(`/`, async (_req, res) => {
 });
 
 myRouter.get(`/comments`, async (_req, res) => {
-    const articles = await api.getArticles();
+    const articles = await api.getArticles({comments: true});
 
     const comments = articles.reduce((acc, article) => {
         acc.push(...article.comments);
