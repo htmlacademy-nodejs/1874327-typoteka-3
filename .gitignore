@@ -11,7 +11,7 @@ Thumbs.db
 *.log*
 node_modules/
 logs/
-src/exporess/upload/
+src/express/upload/
 
 # Директория с собранными файлами проекта
 build/
