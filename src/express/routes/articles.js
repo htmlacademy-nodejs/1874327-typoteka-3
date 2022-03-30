@@ -8,6 +8,30 @@ const upload = require(`../middlewares/upload`);
 
 const ensureArray = (value) => Array.isArray(value) ? value : [value];
 
+articlesRouter.post(`/add`, 
+    upload.single(`upload`),
+    async (req, res, _next) => {
+        const { body, file } = req;
+        const articleData = {
+            photo: file ? file.filename : ``,
+            categories: [1],//ensureArray(body.category),
+            title: body.title,
+            announce: body.announcement,
+            text: body['full-text'],
+            createdDate: new Date(),
+            user_id: 1
+        };
+
+        try {
+            await api.createArticle(articleData);
+            res.redirect(`/my`);
+        } catch (error) {
+            console.log(error.message);
+            res.redirect(`/articles/add`);
+        }
+    }
+);
+
 articlesRouter.get(`/category/:id`, async (req, res) => {
     const id = req.params.id;
     const articles = await api.getArticles({ comments: true });
@@ -18,8 +42,9 @@ articlesRouter.get(`/category/:id`, async (req, res) => {
     res.render(`articles-by-category`, { curCategory, categories, catArticles });
 });
 
-articlesRouter.get(`/:add`, async (_req, res) => {
-    res.render(`add-new-post`, { });
+articlesRouter.get(`/add`, async (_req, res) => {
+    const categories = await api.getCategories();
+    res.render(`add-new-post`, { categories });
 });
 
 articlesRouter.get(`/:id`, async (req, res) => {
@@ -47,33 +72,6 @@ articlesRouter.get(`/edit/:id`, async (req, res) => {
 
     res.render(`edit-post`, { article });
 });
-
-articlesRouter.post(`/add`, 
-    //upload.single(`photo`),
-    async (req, res) => {
-        const { body, file } = req;
-
-        console.log(req.body);
-
-        const articleData = {
-            photo: file ? file.filename : ``,
-            categories: ensureArray(body.category),
-            title: body.title,
-            announce: body.announcement,
-            text: body['full-text'],
-            createdDate: new Date()
-        };
-
-        console.log(articleData);
-
-        try {
-            await api.createArticle(articleData);
-            res.redirect(`/my`);
-        } catch (error) {
-            res.redirect(`/articles/add`);
-        }
-    }
-);
 
 articlesRouter.post(`/:id`, async (req, res) => {
     const { id } = req.params;
