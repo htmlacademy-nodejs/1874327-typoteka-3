@@ -17,6 +17,23 @@ myRouter.get(`/`, async (_req, res) => {
     res.render(`my`, { articles });
 });
 
+myRouter.get(`/categories`, async (_req, res) => {
+    const articles = await api.getArticles({comments: true});
+
+    const categories = articles.reduce((acc, article) => {
+        acc.push(...article.categories);
+        return acc;
+    }, []);
+
+    const uniqCategories = categories.reduce((acc, current) => {
+        if (acc.findIndex(item => item.id === current.id) === -1)
+            acc.push(current);
+        return acc;
+    }, []);
+
+    res.send(JSON.stringify(uniqCategories));
+});
+
 myRouter.get(`/comments`, async (_req, res) => {
     const articles = await api.getArticles({comments: true});
 

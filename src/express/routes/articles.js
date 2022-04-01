@@ -47,9 +47,6 @@ articlesRouter.post(`/:id`,
             createdDate: new Date()
         };
 
-        console.log(`id: ${id}`);
-        console.log(articleData);
-
         const result = await api.updateArticle(id, articleData);
         if (!result) {
             res.status(404).render(`errors/404.pug`, {});
@@ -94,7 +91,6 @@ articlesRouter.get(`/edit/:id`, async (req, res) => {
 });
 
 articlesRouter.get(`/:id`, async (req, res) => {
-    
     const { id } = req.params;
 
     if (id != parseInt(id)) {
