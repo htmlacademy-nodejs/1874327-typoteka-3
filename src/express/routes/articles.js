@@ -12,6 +12,7 @@ articlesRouter.post(`/add`,
     upload.single(`upload`),
     async (req, res) => {
         const { body, file } = req;
+        
         const articleData = {
             picture: file ? file.filename : ``,
             categories: [1],//ensureArray(body.category),
