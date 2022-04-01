@@ -10,10 +10,10 @@ const ensureArray = (value) => Array.isArray(value) ? value : [value];
 
 articlesRouter.post(`/add`, 
     upload.single(`upload`),
-    async (req, res, _next) => {
+    async (req, res) => {
         const { body, file } = req;
         const articleData = {
-            photo: file ? file.filename : ``,
+            picture: file ? file.filename : ``,
             categories: [1],//ensureArray(body.category),
             title: body.title,
             announce: body.announcement,
@@ -32,6 +32,34 @@ articlesRouter.post(`/add`,
     }
 );
 
+articlesRouter.post(`/:id`,
+    upload.single(`upload`),
+    async (req, res) => {        
+        const { id } = req.params;
+        const { body, file } = req;
+
+        const articleData = {
+            picture: file ? file.filename : ``,
+            categories: [1],//ensureArray(body.category),
+            title: body.title,
+            announce: body.announcement,
+            text: body['full-text'],
+            createdDate: new Date()
+        };
+
+        console.log(`id: ${id}`);
+        console.log(articleData);
+
+        const result = await api.updateArticle(id, articleData);
+        if (!result) {
+            res.status(404).render(`errors/404.pug`, {});
+            return;
+        }
+
+        res.render(`post`, { article : articleData } );
+    }
+);
+
 articlesRouter.get(`/category/:id`, async (req, res) => {
     const id = req.params.id;
     const articles = await api.getArticles({ comments: true });
@@ -47,25 +75,17 @@ articlesRouter.get(`/add`, async (_req, res) => {
     res.render(`add-new-post`, { categories });
 });
 
-articlesRouter.get(`/:id`, async (req, res) => {
+articlesRouter.get(`/edit/:id`, async (req, res) => {
     const { id } = req.params;
-    const article = await api.getArticle(id);
 
-    if (!article)
-    {
+    if (!id) {
         res.status(404).render(`errors/404.pug`, {});
         return;
     }
 
-    res.render(`post`, { article });
-});
-
-articlesRouter.get(`/edit/:id`, async (req, res) => {
-    const { id } = req.params;
     const article = await api.getArticle(id);
 
-    if (!article)
-    {
+    if (!article) {
         res.status(404).render(`errors/404.pug`, {});
         return;
     }
@@ -73,26 +93,23 @@ articlesRouter.get(`/edit/:id`, async (req, res) => {
     res.render(`edit-post`, { article });
 });
 
-articlesRouter.post(`/:id`, async (req, res) => {
+articlesRouter.get(`/:id`, async (req, res) => {
+    
     const { id } = req.params;
-    const { body, file } = req;
-    const articleData = {
-        photo: file ? file.filename : ``,
-        categories: [1],//ensureArray(body.category),
-        title: body.title,
-        announce: body.announcement,
-        text: body['full-text'],
-        createdDate: new Date()
-    };
 
-    const result = await api.updateArticle(id, articleData);
-    if (!result)
-    {
+    if (id != parseInt(id)) {
         res.status(404).render(`errors/404.pug`, {});
         return;
     }
 
-    res.render(`post`, { article : articleData } );
+    const article = await api.getArticle(id);
+
+    if (!article) {
+        res.status(404).render(`errors/404.pug`, {});
+        return;
+    }
+
+    res.render(`post`, { article });
 });
 
 module.exports = articlesRouter;

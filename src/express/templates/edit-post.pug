@@ -5,7 +5,7 @@ block content
         section
             .popup.popup--new-publication.popup--anti
                 .new-publication
-                    form(action=`/articles/${article.id}` method='POST')
+                    form(action=`/articles/${article.id}` method="POST" enctype="multipart/form-data" autocomplete="off")
                         div(class='new-publication__header')
                             h1 Редактирование
                             div(class='new-publication__date-form')
