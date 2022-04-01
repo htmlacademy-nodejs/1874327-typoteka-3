@@ -14,7 +14,7 @@ module.exports = (app, service) => {
     });
 
     route.get(`/full`, async (_req, res) => {
-        const categories = await service.findAllWithCounts();
+        const categories = await service.findAll(true);
         res.status(HttpCode.OK)
             .json(categories);
     });

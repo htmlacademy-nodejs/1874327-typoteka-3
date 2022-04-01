@@ -14,8 +14,6 @@ indexRouter.get(`/registration`, (_req, res) => res.render(`sign-up`));
 
 indexRouter.get(`/post-user`, (_req, res) => res.render(`post-detail`));
 
-indexRouter.get(`/publications-by-category`, (_req, res) => res.render(`articles-by-category`));
-
 indexRouter.get(`/admin-comments`, (_req, res) => res.render(`comments`));
 
 indexRouter.get(`/admin-publications`, (_req, res) => res.render(`my`));
@@ -30,14 +28,14 @@ indexRouter.get(`/register`, (_req, res) => res.render(`registration`));
 
 indexRouter.get(`/`, async (_req, res) => {
     const [articles, categories] = await Promise.all([
-        api.getArticles(),
+        api.getArticles({comments: true}),
         api.getCategoriesWithCounts()
     ]);
 
     articles.map(article => {
         article.createdDate = getFormatedDate(article.createdDate);
         return article;
-    })
+    });
 
     res.render(`main`, { articles, categories });
 });
