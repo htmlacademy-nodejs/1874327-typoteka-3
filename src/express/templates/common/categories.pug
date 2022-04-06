@@ -1,0 +1,7 @@
+section(class='main-page__theme-list')
+    h2.visually-hidden Список тем
+    ul.themes
+        each category of categories
+            li(class='themes__item')
+                a(class='themes__item-link' href="/articles/category/" + category.id) #{category.name}
+                    sup #{category.count}

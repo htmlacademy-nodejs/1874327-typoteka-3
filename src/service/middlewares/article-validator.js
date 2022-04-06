@@ -3,7 +3,7 @@ const logger = require(`../lib/logger`);
 
 const { HttpCode } = require(`../../constants`);
 
-const articleKeys = [`title`, `createdDate`, `announce`, `fullText`, `category`];
+const articleKeys = [`title`, `createdDate`, `announce`, `text`, `categories`];
 
 module.exports = (req, res, next) => {
     const newArticle = req.body;

@@ -1,13 +1,13 @@
 'use strict';
 
-const CategoriesService = require(`./CategoriesService`);
-const ArticlesService = require(`./ArticlesService`);
-const CommentsService = require(`./CommentsService`);
+const CategoryService = require(`./CategoryService`);
+const PublicationService = require(`./PublicationService`);
+const CommentService = require(`./CommentService`);
 const SearchService = require(`./SearchService`);
 
 module.exports = {
-    CategoriesService,
-    ArticlesService,
-    CommentsService,
+    CategoryService,
+    PublicationService,
+    CommentService,
     SearchService
 }

@@ -25,7 +25,7 @@ describe(`API returns articles based on search query`, () => {
 
     test(`Status code 200`, () => expect(response.statusCode).toBe(HttpCode.OK));
     test(`2 articles found`, () => expect(response.body.length).toBe(2));
-    test(`Offer has correct id`, () => expect(response.body[0].id).toBe(`RxCDXS`));
+    test(`Publication has correct id`, () => expect(response.body[0].id).toBe(`RxCDXS`));
 });
 
 test(`API returns code 404 if nothing is found`,

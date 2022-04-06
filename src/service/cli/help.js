@@ -13,7 +13,7 @@ module.exports = {
             Команды:
             --version:            выводит номер версии
             --help:               печатает этот текст
-            --generate <count>    формирует файл mocks.json
+            --filldb <count>      заполняет базу данных
             --fill-db <count>     формирует файл fill-db.sql`));
     }
 };

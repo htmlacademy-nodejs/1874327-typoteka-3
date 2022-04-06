@@ -2,8 +2,8 @@
 
 const express = require(`express`);
 const request = require(`supertest`);
-const comments = require(`./comments`);
-const CommentsService = require(`../data-service/CommentsService`);
+const comments = require(`./comment`);
+const CommentsService = require(`../data-service/CommentService`);
 const { HttpCode } = require(`../../constants`);
 const mockData = require(`../../../mocks-test`);
 

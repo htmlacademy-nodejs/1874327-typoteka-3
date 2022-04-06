@@ -13,5 +13,5 @@ block content
                     each article of results
                         div(class='search__result')
                             time(class='search__date' datetime='') #{article.createdDate}
-                            a(class='search__link') #{article.title}
+                            a(href=`/articles/${article.id}` class='search__link') #{article.title}
 

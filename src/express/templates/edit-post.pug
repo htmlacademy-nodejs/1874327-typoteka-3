@@ -5,7 +5,7 @@ block content
         section
             .popup.popup--new-publication.popup--anti
                 .new-publication
-                    form(action='#' method='POST')
+                    form(action=`/articles/${article.id}` method="POST" enctype="multipart/form-data" autocomplete="off")
                         div(class='new-publication__header')
                             h1 Редактирование
                             div(class='new-publication__date-form')
@@ -33,8 +33,9 @@ block content
                                     //button.button.button--transparent Удалить
                                 div(class='new-publication__category-wrapper')
                                     div(class='new-publication__checkbox new-publication__checkbox--auto')
-                                        input#checkbox-auto(type='checkbox' name='category-1')
-                                        label(for='checkbox-auto') #{article.category}
+                                        each category of article.categories
+                                            input#checkbox-auto(type='checkbox' name='category-1')
+                                            label(for='checkbox-auto') #{category.name}
                                     a(class='new-publication__form-link button button--transparent' href='#') Добавить категорию
                             div(class='form__wrapper form__wrapper--text')
                                 div(class='form__field form__field--publication-text')
@@ -42,4 +43,4 @@ block content
                                         textarea(rows='5' name='announcement' placeholder='Анонс публикации' required='') #{article.announce}
                                 div(class='form__field form__field--publication-text')
                                     label
-                                        textarea(rows='10' name='full-text' placeholder='Полный текст публикации') #{article.fullText}
+                                        textarea(rows='10' name='full-text' placeholder='Полный текст публикации') #{article.text}

@@ -2,9 +2,9 @@
 
 const express = require(`express`);
 const request = require(`supertest`);
-const articles = require(`./articles`);
-const DataService = require(`../data-service/ArticlesService`);
-const CommentService = require(`../data-service/CommentsService`);
+const articles = require(`./publication`);
+const DataService = require(`../data-service/PublicationService`);
+const CommentService = require(`../data-service/CommentService`);
 const { HttpCode } = require(`../../constants`);
 const mockData = require(`../../../mocks-test`);
 
@@ -53,7 +53,7 @@ describe(`API creates an article if data is valid`, () => {
     const newArticle = {
         title: `Тест добавления статьи`,
         announce: `Программировать не настолько сложно, как об этом говорят`,
-        fullText: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
+        text: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
         createdDate: `2021-08-27T00:15:14.409Z`,
         category: `тестирование`
     };
@@ -81,7 +81,7 @@ describe(`API creates an article if data is valid`, () => {
 describe(`API refuses to create an article if data is invalid`, () => {
     const newArticle = {
         title: `Тест добавления статьи`,
-        fullText: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
+        text: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
         createdDate: `2021-08-27T00:15:14.409Z`,
         category: `тестирование`
     };
@@ -104,7 +104,7 @@ describe(`API changes existent article`, () => {
     const newArticle = {
         title: `Тест добавления статьи измененный`,
         announce: `Программировать не настолько сложно, как об этом говорят`,
-        fullText: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
+        text: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
         createdDate: `2021-08-27T00:15:14.409Z`,
         category: `тестирование`
     };
@@ -135,7 +135,7 @@ test(`API returns status code 404 when trying to change non-existent article`, (
     const validArticle = {
         title: `Тест добавления статьи измененный`,
         announce: `Программировать не настолько сложно, как об этом говорят`,
-        fullText: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
+        text: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
         createdDate: `2021-08-27T00:15:14.409Z`,
         category: `тестирование`
     };
@@ -153,7 +153,7 @@ test(`API returns status code 400 when trying to change an article with invalid 
     const invalidArticle = {
         title: `Тест добавления статьи измененный`,
         announce: `Программировать не настолько сложно, как об этом говорят`,
-        fullText: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
+        text: `Программировать не настолько сложно, как об этом говорят. Простые ежедневные упражнения помогут достичь успеха.`,
         createdDate: `2021-08-27T00:15:14.409Z`
     };
   
@@ -213,7 +213,7 @@ describe(`API returns a list of commets with given article id`, () => {
     test(`First comment's id equals "ue8TuH"`, () => expect(response.body[0].id).toBe(`ue8TuH`));
 });
 
-test(`API refuses to get comments of non-existent offer`, () => {
+test(`API refuses to get comments of non-existent publication`, () => {
     const app = createAPI();
   
     return request(app)
@@ -277,9 +277,9 @@ describe(`API correctly deletes a comment`, () => {
 
     test(`Status code 200`, () => expect(response.statusCode).toBe(HttpCode.OK));
   
-    test(`Returns deleted offer`, () => expect(response.body.id).toBe(`Koiy1L`));
+    test(`Returns deleted publication`, () => expect(response.body.id).toBe(`Koiy1L`));
   
-    test(`Offer count is 3 now`, () => request(app)
+    test(`Publication count is 3 now`, () => request(app)
         .get(`/articles/RxCDXS/comments`)
         .expect((res) => {
             expect(res.body.length).toBe(3)
