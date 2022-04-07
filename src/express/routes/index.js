@@ -24,20 +24,28 @@ indexRouter.get(`/admin-categories`, (_req, res) => res.render(`all-categories`)
 
 indexRouter.get(`/register`, (_req, res) => res.render(`registration`));
 
+const OFFERS_PER_PAGE = 8;
+
 // api
 
-indexRouter.get(`/`, async (_req, res) => {
-    const [articles, categories] = await Promise.all([
-        api.getArticles({comments: true}),
-        api.getCategoriesWithCounts()
+indexRouter.get(`/`, async (req, res) => {
+    let {page = 1} = req.query;
+    page = +page;
+  
+    const limit = OFFERS_PER_PAGE;
+  
+    const offset = (page - 1) * OFFERS_PER_PAGE;
+    let [
+      {count, articles},
+      categories
+    ] = await Promise.all([
+      api.getArticles({comments: true, limit, offset}),
+      api.getCategoriesWithCounts()
     ]);
-
-    articles.map(article => {
-        article.createdDate = getFormatedDate(article.createdDate);
-        return article;
-    });
-
-    res.render(`main`, { articles, categories });
+  
+    const totalPages = Math.ceil(count / OFFERS_PER_PAGE);
+  
+    res.render(`main`, {articles, page, totalPages, categories});
 });
 
 indexRouter.get(`/search`, async (req, res) => {    

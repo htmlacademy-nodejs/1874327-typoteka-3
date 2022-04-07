@@ -1,0 +1,29 @@
+mixin pagination(page, totalPages, width, prefix)
+    -
+      let start = page - width;
+      let end = page + width;
+      if (start < 1) {
+        end += 1 - start;
+        start = 1;
+      }
+      if (end > totalPages) {
+        start -= end - totalPages;
+        end = totalPages;
+      }
+      if (start < 1) {
+        start = 1;
+      }
+      let i = start - 1
+    div(class='preview__toggle-wrapper')
+      ul(class='preview__pagination pagination')
+        li
+          a(class='pagination__button button button--backwards' class={'button--disabled': page == 1} href=`${prefix}page=${page - 1}`) Назад
+        while i++ < end
+          if page !== i
+            li(class='pagination__item')
+              a(href=`${prefix}page=${i}`)= i
+          else
+            li(class='pagination__item pagination__item--active')
+              a(href='#')= i
+        li
+          a(class='pagination__button button button--forward' class={'button--disabled': page == totalPages} href=`${prefix}page=${page + 1}`) Вперёд
